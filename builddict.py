@@ -10,8 +10,11 @@ from pykakasi import kakasi as Kakasi
 import unicodedata
 
 #Open new and old dictionaries
-sheet = Path(__file__).parent / "vdrj.xls"
-wbc = xlrd.open_workbook(sheet, encoding_override='utf-8')
+script_dir = Path(__file__).parent
+newdict_path = script_dir / "newdict.xlsx"
+sheet_path = str(script_dir / "vdrj.xls")
+sheet = sheet_path
+wbc = xlrd.open_workbook(sheet_path, encoding_override='utf-8')
 
 #Move contents of old dictionary to lists
 df = pd.read_excel(sheet, sheet_name="list", usecols="C", dtype = object)
@@ -135,7 +138,7 @@ length2 = len(newdict_df)
 duplicates = length1 - length2
 numb -= duplicates
 magnitude = round(numb/other, 1)
-newdict_df.to_excel("newdict.xlsx", index=False)
+newdict_df.to_excel(newdict_path, index=False)
 print("Done!")
 print(f"Words processed: {other} out of 50816")
 print(f"Words added: {numb} (a {magnitude}x increase!)")
